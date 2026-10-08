@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Calendário</title>
+
+<style>
+body{
+  margin:32px;
+  font:72px monospace;
+  color:#000;
+  background:#fff;
+}
+pre{margin:0 0 1em}
+h3{margin:1em 0 .3em}
+strong{font-weight:900}
+</style>
+
+<body><div id="c"></div>
+
+<script>
+const M="JANEIRO FEVEREIRO MARÇO ABRIL MAIO JUNHO JULHO AGOSTO SETEMBRO OUTUBRO NOVEMBRO DEZEMBRO".split(" ");
+const H=new Date(),D=H.getDate(),M0=H.getMonth(),A0=H.getFullYear();
+const C=document.getElementById("c");
+
+function cal(m,a){
+  let p=new Date(a,m,1).getDay(),
+      u=new Date(a,m+1,0).getDate(),
+      s="Do Se Te Qa Qi Se Sa\n\n",
+      l="   ".repeat(p);
+
+  for(let d=1;d<=u;d++){
+    let x=String(d).padStart(2,"0");
+    if(d===D&&m===M0&&a===A0) x=`<font color="red" ><strong>${x}</strong></font>`;
+    l+=x+(p%7<6?" ":"");
+    if(++p%7===0){ s+=l+"\n"; l=""; }
+  }
+  return s+l;
+}
+
+for(let k=-6;k<=6;k++){
+  let t=new Date(A0,M0+k,1),
+      m=t.getMonth(),
+      a=t.getFullYear();
+
+  C.insertAdjacentHTML(
+    "beforeend",
+    `<div ${k===0?'id="atual"':''}>
+       <h3>${M[m]} ${a}</h3>
+       <pre>${cal(m,a)}</pre>
+     </div>`
+  );
+}
+
+document.getElementById("atual").scrollIntoView();
+</script>

@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Calendário</title>
 
+manifest.json
+
+<meta name="theme-color" content="#ffffff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<title>Calendário</title>
+</head>
 <style>
 body{
   margin:32px;
@@ -53,4 +60,7 @@ for(let k=-6;k<=6;k++){
 }
 
 document.getElementById("atual").scrollIntoView();
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("./service-worker.js");
+}
 </script>
